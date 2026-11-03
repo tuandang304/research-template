@@ -6,7 +6,7 @@
 
 Clone về, chạy một câu lệnh là bắt đầu nghiên cứu ngay — với cấu trúc dự án gọn
 gàng, khả năng tái lập (reproducibility) tích hợp sẵn, khung bài báo LaTeX, và
-các kỹ năng (skills) của [Claude Code](https://claude.com/claude-code) đã cài đặt sẵn.
+các skill cho agent cài sẵn, dùng ngay làm dự án [OpenResearch](https://github.com/tuandang304/OpenResearch).
 
 [![CI](https://github.com/tuandang304/research-template/actions/workflows/ci.yml/badge.svg)](https://github.com/tuandang304/research-template/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
@@ -30,7 +30,7 @@ công việc luôn tái lập được, dễ chia sẻ và dễ chuyển thành 
 - 📁 **Cấu trúc hợp lý** — `data/ · notebooks/ · experiments/ · results/ · paper/`.
 - 📦 **Chạy được ngay** — `uv sync` cài đủ mọi thứ; có sẵn một thí nghiệm mẫu chạy thật.
 - 📄 **Sẵn sàng viết báo** — khung LaTeX lấy hình trực tiếp từ `results/`, kèm `CITATION.cff`.
-- 🤖 **Sẵn sàng cho AI-agent** — tích hợp sẵn các skill của Claude Code (API, trích dẫn, thiết kế hệ thống...).
+- 🤖 **Sẵn sàng cho AI-agent** — có hướng dẫn `AGENTS.md` và các skill cho trích dẫn, tài liệu thiết kế, bộ nhớ dự án.
 - ✅ **Đầy đủ công cụ** — test, linting (ruff), CI, và mẫu issue/PR đã cấu hình sẵn.
 
 ## Bắt đầu nhanh (Quickstart)
@@ -86,7 +86,7 @@ research-template/
 ├── config.yaml             # Config duy nhất: seed, thí nghiệm cần chạy, tham số của nó
 ├── main.py                 # Run command cố định:  uv run python main.py [info]
 ├── AGENTS.md · CLAUDE.md   # Hướng dẫn cho coding agent
-├── .claude/ · .agents/     # Các skill Claude Code cài sẵn (xem bên dưới)
+├── .agents/skills/         # Các skill agent cài sẵn (xem bên dưới)
 ├── pyproject.toml          # Metadata, dependencies, cấu hình ruff & pytest
 └── uv.lock                 # Phiên bản chính xác của dependencies — hãy commit
 ```
@@ -118,22 +118,20 @@ Hình lưu vào `results/figures/` được `paper/main.tex` nạp trực tiếp
 (`\graphicspath{{../results/figures/}}`). Biên dịch bài báo bằng `latexmk -pdf main.tex`
 hoặc đưa thư mục lên [Overleaf](https://overleaf.com). GitHub cũng sẽ hiện nút
 **"Cite this repository"** nhờ `CITATION.cff`.
+## Các skill agent tích hợp sẵn 🤖
 
-## Các skill Claude Code tích hợp sẵn 🤖
-
-Nếu bạn dùng [Claude Code](https://claude.com/claude-code), các skill này tự nạp
-từ `.claude/skills/` (nhân bản trong `.agents/skills/`):
+Một vài skill nghiên cứu nằm trong `.agents/skills/`, nơi Codex, OpenCode và các
+agent đọc thư mục này sẽ tự nạp:
 
 | Skill | Giúp bạn… |
 | --- | --- |
-| **claude-api** | Lập trình với Claude API trên 8 ngôn ngữ (caching, tools, batches). |
 | **bibtex-citation** | Lấy và định dạng BibTeX chuẩn cho `paper/references.bib`. |
 | **system-design** | Soạn tài liệu kiến trúc và thiết kế cho `docs/`. |
-| **skill-creator / skill-development** | Tự tạo skill riêng cho dự án. |
-| **agent-development / plugin-structure** | Xây dựng agent và plugin tùy biến. |
 | **memory-management** | Trao cho agent bộ nhớ dự án bền vững. |
 
-Không dùng Claude Code? Các thư mục này vô hại — xóa đi cũng không sao.
+Trong OpenResearch, mỗi phiên còn có thêm các skill `orx-*` của orx. Không dùng
+agent? Thư mục này vô hại — xóa đi cũng không sao.
+
 
 ## Tùy biến cho riêng bạn
 
@@ -142,7 +140,7 @@ Sau khi bấm **Use this template**, hãy biến nó thành của bạn:
 1. Đổi tên package `src/ark/` → `src/<tên_dự_án>` và cập nhật `pyproject.toml`.
 2. Điền thông tin tác giả trong `pyproject.toml`, `LICENSE` và `CITATION.cff`.
 3. Thêm dependencies bằng `uv add <package>` (cập nhật `uv.lock`).
-4. Xóa thí nghiệm mẫu và những phần `paper/`/`.claude/` bạn không cần.
+4. Xóa thí nghiệm mẫu và những phần `paper/`/`.agents/` bạn không cần.
 
 ## Đóng góp
 
