@@ -1,6 +1,6 @@
 [project]
 name = "agent-research-kit"
-version = "0.1.0"
+version = "0.2.0"
 description = "A reproducible, AI-agent-ready template for academic and data-science research."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -27,12 +27,17 @@ dependencies = [
 
 [project.optional-dependencies]
 notebook = ["jupyterlab>=4.0", "ipykernel>=6.29"]
+# Metric charts in OpenResearch (`orx metrics`); `ark.start_run` uses it when installed.
+tracking = ["trackio>=0.2"]
+
+# Installed by `uv sync` by default, never shipped with the package.
+[dependency-groups]
 dev = ["ruff>=0.6", "pytest>=8.0", "pre-commit>=3.7", "nbstripout>=0.7"]
 
 [project.urls]
-Homepage = "https://github.com/tuandang304/agent-research-kit"
-Repository = "https://github.com/tuandang304/agent-research-kit"
-Issues = "https://github.com/tuandang304/agent-research-kit/issues"
+Homepage = "https://github.com/tuandang304/research-template"
+Repository = "https://github.com/tuandang304/research-template"
+Issues = "https://github.com/tuandang304/research-template/issues"
 
 [build-system]
 requires = ["hatchling"]
@@ -54,4 +59,4 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-pythonpath = ["src"]
+pythonpath = ["src", "."]

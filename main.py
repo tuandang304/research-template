@@ -1,15 +1,17 @@
-"""Project entry point.
+"""Project entry point — the one command every experiment runs.
 
-Thin dispatcher so `uv run main.py` (or `python main.py`) does something useful
-out of the box. Wire your own commands in as the project grows.
+OpenResearch gives every experiment node the same fixed run command, so this
+file stays the same and each node changes only the code and ``config.yaml`` on
+its branch. Set the project's run command once to ``uv run python main.py``.
 
 Usage:
-    python main.py            # print project info
-    python main.py example    # run the example experiment
+    uv run python main.py          # run the experiment named in config.yaml
+    uv run python main.py info     # print project info
 """
 
 from __future__ import annotations
 
+import importlib
 import sys
 
 # Make `import ark` work when running this file directly, without an install.
@@ -22,18 +24,17 @@ log = get_logger("main")
 
 def main(argv: list[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
-    command = argv[0] if argv else "info"
+    command = argv[0] if argv else "run"
 
     if command == "info":
         log.info("agent-research-kit v%s", __version__)
         log.info("seed=%d  log_level=%s", config.seed, config.log_level)
-        log.info("Run an experiment with:  python main.py example")
-    elif command == "example":
-        from experiments.example_experiment import main as run_example
-
-        run_example()
+        log.info("experiment=%s  params=%s", config.experiment, config.params)
+    elif command == "run":
+        module = importlib.import_module(f"experiments.{config.experiment}")
+        module.run(config.params)
     else:
-        log.error("Unknown command: %s (try 'info' or 'example')", command)
+        log.error("Unknown command: %s (try 'run' or 'info')", command)
         return 1
     return 0
 
