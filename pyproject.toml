@@ -1,43 +1,24 @@
 [project]
-name = "agent-research-kit"
-version = "0.2.0"
-description = "A reproducible, AI-agent-ready template for academic and data-science research."
+name = "research-template"
+version = "0.3.0"
+description = "A minimal, reproducible research project for OpenResearch."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-authors = [{ name = "Your Name", email = "you@example.com" }]
-keywords = ["research", "template", "reproducibility", "data-science", "machine-learning", "claude", "ai-agents"]
-classifiers = [
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering",
-]
-
 dependencies = [
     "numpy>=1.26",
-    "pandas>=2.1",
     "matplotlib>=3.8",
     "scikit-learn>=1.4",
-    "scipy>=1.11",
     "pyyaml>=6.0",
     "rich>=13.7",
-    "tqdm>=4.66",
 ]
 
 [project.optional-dependencies]
-notebook = ["jupyterlab>=4.0", "ipykernel>=6.29"]
 # Metric charts in OpenResearch (`orx metrics`); `ark.start_run` uses it when installed.
 tracking = ["trackio>=0.2"]
 
-# Installed by `uv sync` by default, never shipped with the package.
 [dependency-groups]
-dev = ["ruff>=0.6", "pytest>=8.0", "pre-commit>=3.7", "nbstripout>=0.7"]
-
-[project.urls]
-Homepage = "https://github.com/tuandang304/research-template"
-Repository = "https://github.com/tuandang304/research-template"
-Issues = "https://github.com/tuandang304/research-template/issues"
+dev = ["ruff>=0.6", "pytest>=8.0"]
 
 [build-system]
 requires = ["hatchling"]
@@ -49,9 +30,6 @@ packages = ["src/ark"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-src = ["src", "experiments", "tests"]
-# Don't lint vendored Claude Code skills or generated artifacts.
-extend-exclude = [".claude", ".agents", "notebooks"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

@@ -16,15 +16,8 @@ import yaml
 PROJECT_ROOT: Path = Path(__file__).resolve().parents[2]
 
 DATA_DIR: Path = PROJECT_ROOT / "data"
-RAW_DATA_DIR: Path = DATA_DIR / "raw"
-PROCESSED_DATA_DIR: Path = DATA_DIR / "processed"
-EXTERNAL_DATA_DIR: Path = DATA_DIR / "external"
-
 RESULTS_DIR: Path = PROJECT_ROOT / "results"
 FIGURES_DIR: Path = RESULTS_DIR / "figures"
-TABLES_DIR: Path = RESULTS_DIR / "tables"
-
-EXPERIMENTS_DIR: Path = PROJECT_ROOT / "experiments"
 
 _CONFIG_FILE: Path = PROJECT_ROOT / "config.yaml"
 
