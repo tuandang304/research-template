@@ -8,11 +8,11 @@ Clone về, chạy một câu lệnh là bắt đầu nghiên cứu ngay — v�
 gàng, khả năng tái lập (reproducibility) tích hợp sẵn, khung bài báo LaTeX, và
 các kỹ năng (skills) của [Claude Code](https://claude.com/claude-code) đã cài đặt sẵn.
 
-[![CI](https://github.com/tuandang304/agent-research-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/tuandang304/agent-research-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/tuandang304/research-template/actions/workflows/ci.yml/badge.svg)](https://github.com/tuandang304/research-template/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Code style: ruff](https://img.shields.io/badge/style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Use this template](https://img.shields.io/badge/use%20this-template-2ea44f?logo=github)](https://github.com/tuandang304/agent-research-kit/generate)
+[![Use this template](https://img.shields.io/badge/use%20this-template-2ea44f?logo=github)](https://github.com/tuandang304/research-template/generate)
 
 [English](README.md) · [Tiếng Việt](README.vi.md)
 
@@ -39,49 +39,75 @@ công việc luôn tái lập được, dễ chia sẻ và dễ chuyển thành 
 
 ```bash
 # 1. Lấy code (hoặc bấm "Use this template" trên GitHub)
-git clone https://github.com/tuandang304/agent-research-kit.git
-cd agent-research-kit
+git clone https://github.com/tuandang304/research-template.git
+cd research-template
 
 # 2. Cài mọi thứ vào một môi trường độc lập
-uv sync                     # thêm --extra dev để test/lint, --extra notebook cho Jupyter
+uv sync                     # phiên bản khoá trong uv.lock, đã gồm công cụ dev. --extra notebook cho Jupyter
 
-# 3. Chạy thí nghiệm mẫu — huấn luyện mô hình và lưu hình vào results/figures/
-uv run python main.py example
+# 3. Chạy thí nghiệm trong config.yaml — huấn luyện mô hình, in một dòng summary,
+#    ghi results/metrics.json và lưu hình vào results/figures/
+uv run python main.py
 ```
 
-Thích dùng pip? `python -m venv .venv && source .venv/bin/activate && pip install -e ".[dev,notebook]"`
+Thích dùng pip? `python -m venv .venv && source .venv/bin/activate && pip install -e ".[notebook]" ruff pytest`
 
 Vậy là xong — bạn đã có một dự án nghiên cứu hoạt động và tái lập được.
+
+## Dùng với OpenResearch
+
+Template được thiết kế để làm dự án [OpenResearch](https://github.com/tuandang304/OpenResearch)
+ngay từ đầu:
+
+1. Trong `orx up`, tạo dự án mới và dán URL repo này làm repo để clone (hoặc tự
+   `git clone` rồi import thư mục).
+2. Đặt run command một lần: `orx project edit <projectId> --run-command 'uv run python main.py'`.
+3. Tạo node baseline và chạy. Mọi node con giữ nguyên lệnh đó, chỉ đổi `config.yaml`
+   hoặc code trên branch của chính nó.
+4. Muốn có biểu đồ metric cạnh mỗi run thì `uv add trackio` (hoặc `uv sync --extra tracking`).
+   `ark.start_run` đã dùng sẵn các biến `ORX_*` và `TRACKIO_PROJECT` mà orx đặt, nên
+   `orx metrics <runId>` tìm được run. Không có Trackio thì dòng `summary:` trong log
+   và file `results/metrics.json` vẫn ghi lại kết quả.
+
+Agent đọc [AGENTS.md](AGENTS.md) (Claude Code đọc nó qua `CLAUDE.md`).
 
 ## Cấu trúc dự án
 
 ```
-agent-research-kit/
-├── src/ark/                # Package tái sử dụng của bạn (config, seed, logging, data IO)
-├── experiments/            # Mỗi thí nghiệm một script + file config YAML riêng
+research-template/
+├── src/ark/                # Package tái sử dụng của bạn (config, seed, logging, data IO, tracking)
+├── experiments/            # Các module thí nghiệm, mỗi module có run(params)
 ├── notebooks/              # Khám phá dữ liệu; 01_exploratory.ipynb đã nối với `ark`
 ├── data/                   # raw / processed / external  (nội dung bị git bỏ qua)
 ├── results/                # figures / tables            (tự sinh lại, git bỏ qua)
 ├── paper/                  # Khung LaTeX + references.bib → dùng results/figures
 ├── docs/                   # Ghi chú thiết kế, tài liệu dữ liệu, nhật ký thí nghiệm
 ├── tests/                  # Test kiểm tra nhanh bằng pytest
-├── config.yaml             # Cấu hình toàn dự án (seed, log level, khóa của bạn)
-├── main.py                 # Điểm chạy chính:  python main.py [info|example]
+├── config.yaml             # Config duy nhất: seed, thí nghiệm cần chạy, tham số của nó
+├── main.py                 # Run command cố định:  uv run python main.py [info]
+├── AGENTS.md · CLAUDE.md   # Hướng dẫn cho coding agent
 ├── .claude/ · .agents/     # Các skill Claude Code cài sẵn (xem bên dưới)
-└── pyproject.toml          # Metadata, dependencies, cấu hình ruff & pytest
+├── pyproject.toml          # Metadata, dependencies, cấu hình ruff & pytest
+└── uv.lock                 # Phiên bản chính xác của dependencies — hãy commit
 ```
 
 ## Quy ước tái lập (Reproducibility)
 
-Mọi thí nghiệm đều theo ba quy tắc giống nhau, nên kết quả rất dễ tái lập:
+Mọi thí nghiệm đều theo cùng các quy tắc, nên kết quả rất dễ tái lập:
 
 ```python
-from ark import config, get_logger, set_seed
+from ark import config, set_seed, start_run
 
-set_seed(config.seed)        # 1. Seed Python, NumPy và PyTorch (nếu có cài)
-log = get_logger("my_exp")   # 2. Logging nhất quán, dễ đọc
-# 3. Đọc cấu hình từ config.yaml / experiments/configs/*.yaml — không hard-code
+
+def run(params):
+    set_seed(config.seed)  # 1. Seed Python, NumPy và PyTorch (nếu có cài)
+    with start_run("my_exp", params) as tracker:  # 2. Theo dõi metric (Trackio nếu có cài)
+        ...  # 3. Đọc cấu hình từ params (config.yaml) — không hard-code
+        tracker.summary({"accuracy": 0.93})  # 4. Một dòng summary cuối + results/metrics.json
 ```
+
+Trỏ `experiment:` trong `config.yaml` tới module của bạn, rồi `uv run python main.py` sẽ chạy nó.
+Dependencies được khoá trong `uv.lock`; thêm mới bằng `uv add <package>`.
 
 Đường dẫn được phân giải từ thư mục gốc repo qua `ark.config`, nên cùng một đoạn
 code chạy được từ script, notebook hay test — không phải mò `../../`.
@@ -115,7 +141,7 @@ Sau khi bấm **Use this template**, hãy biến nó thành của bạn:
 
 1. Đổi tên package `src/ark/` → `src/<tên_dự_án>` và cập nhật `pyproject.toml`.
 2. Điền thông tin tác giả trong `pyproject.toml`, `LICENSE` và `CITATION.cff`.
-3. Thêm dependencies vào `pyproject.toml`, rồi `uv sync`.
+3. Thêm dependencies bằng `uv add <package>` (cập nhật `uv.lock`).
 4. Xóa thí nghiệm mẫu và những phần `paper/`/`.claude/` bạn không cần.
 
 ## Đóng góp

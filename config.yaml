@@ -1,9 +1,18 @@
-# Project-wide settings, read by `ark.config`.
-# Anything not listed here is available via `config.extra`.
+# The one config file every run reads (via `ark.config`).
+#
+# OpenResearch runs every experiment node with the same fixed command
+# (`uv run python main.py`). A node differs from its parent only by the code and
+# config committed on its branch, so change a hyperparameter here, on the
+# child's branch, never in the run command or through environment variables.
 
 seed: 42
 log_level: INFO
 
-# Add your own keys freely, e.g.:
-# dataset: iris
-# test_size: 0.2
+# Which module in experiments/ `main.py` runs.
+experiment: example_experiment
+
+# Hyperparameters handed to that experiment's `run(params)`.
+params:
+  dataset: wine
+  n_estimators: 200
+  test_size: 0.25

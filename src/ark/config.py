@@ -35,6 +35,8 @@ class Config:
 
     seed: int = 42
     log_level: str = "INFO"
+    experiment: str = "example_experiment"
+    params: dict[str, Any] = field(default_factory=dict)
     extra: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
@@ -42,10 +44,12 @@ class Config:
         if not path.exists():
             return cls()
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        known = {"seed", "log_level"}
+        known = {"seed", "log_level", "experiment", "params"}
         return cls(
             seed=int(data.get("seed", 42)),
             log_level=str(data.get("log_level", "INFO")),
+            experiment=str(data.get("experiment", "example_experiment")),
+            params=dict(data.get("params") or {}),
             extra={k: v for k, v in data.items() if k not in known},
         )
 

@@ -4,25 +4,25 @@ Thanks for your interest in improving **Agent Research Kit**! 🎉
 
 ## Ways to contribute
 
-- **Report bugs / request features** via [Issues](https://github.com/tuandang304/agent-research-kit/issues).
+- **Report bugs / request features** via [Issues](https://github.com/tuandang304/research-template/issues).
 - **Improve docs** — typos, clarifications, and better examples are always welcome.
 - **Submit code** via pull request (see below).
 
 ## Development setup
 
 ```bash
-git clone https://github.com/tuandang304/agent-research-kit.git
-cd agent-research-kit
-uv sync --extra dev        # or: pip install -e ".[dev]"
-pre-commit install         # optional: format & lint on commit
+git clone https://github.com/tuandang304/research-template.git
+cd research-template
+uv sync                    # dev tools come from the `dev` dependency group
+uv run pre-commit install  # optional: format & lint on commit
 ```
 
 ## Before opening a PR
 
 ```bash
-ruff format .              # format
-ruff check . --fix         # lint
-pytest                     # tests must pass
+uv run ruff format .       # format
+uv run ruff check . --fix  # lint
+uv run pytest              # tests must pass
 ```
 
 Keep changes focused and match the existing style. For anything non-trivial,
