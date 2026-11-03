@@ -6,7 +6,7 @@
 
 Clone it, run one command, and start doing research — with a clean project
 structure, reproducibility built in, a LaTeX paper scaffold, and
-[Claude Code](https://claude.com/claude-code) skills pre-installed.
+agent skills pre-installed, ready to use as an [OpenResearch](https://github.com/tuandang304/OpenResearch) project.
 
 [![CI](https://github.com/tuandang304/research-template/actions/workflows/ci.yml/badge.svg)](https://github.com/tuandang304/research-template/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
@@ -30,7 +30,7 @@ shareable, and easy to turn into a paper.
 - 📁 **Sensible structure** — `data/ · notebooks/ · experiments/ · results/ · paper/`.
 - 📦 **Ready to run** — `uv sync` installs everything; a real example experiment ships in the box.
 - 📄 **Paper-ready** — LaTeX scaffold that pulls figures straight from `results/`, plus a `CITATION.cff`.
-- 🤖 **AI-agent-ready** — bundled Claude Code skills for API work, citations, system design, and more.
+- 🤖 **AI-agent-ready** — an `AGENTS.md` guide plus bundled skills for citations, design docs, and project memory.
 - ✅ **Batteries included** — tests, linting (ruff), CI, and issue/PR templates already wired up.
 
 ## Quickstart
@@ -86,7 +86,7 @@ research-template/
 ├── config.yaml             # The one config: seed, experiment to run, its params
 ├── main.py                 # The fixed run command:  uv run python main.py [info]
 ├── AGENTS.md · CLAUDE.md   # Instructions for coding agents
-├── .claude/ · .agents/     # Pre-installed Claude Code skills (see below)
+├── .agents/skills/         # Bundled agent skills (see below)
 ├── pyproject.toml          # Metadata, dependencies, ruff & pytest config
 └── uv.lock                 # Exact dependency versions — commit it
 ```
@@ -119,21 +119,19 @@ Figures written to `results/figures/` are picked up directly by `paper/main.tex`
 or drop the folder into [Overleaf](https://overleaf.com). GitHub will also show a
 **"Cite this repository"** button thanks to `CITATION.cff`.
 
-## Bundled Claude Code skills 🤖
+## Bundled agent skills 🤖
 
-If you use [Claude Code](https://claude.com/claude-code), these skills load
-automatically from `.claude/skills/` (mirrored in `.agents/skills/`):
+A few research skills live in `.agents/skills/`, where Codex, OpenCode and other
+agents that read that folder pick them up:
 
 | Skill | Helps you… |
 | --- | --- |
-| **claude-api** | Build with the Claude API across 8 languages (caching, tools, batches). |
 | **bibtex-citation** | Fetch and format correct BibTeX entries for `paper/references.bib`. |
 | **system-design** | Draft architecture and design docs for `docs/`. |
-| **skill-creator / skill-development** | Author your own project skills. |
-| **agent-development / plugin-structure** | Build custom agents and plugins. |
 | **memory-management** | Give agents durable project memory. |
 
-Not using Claude Code? These folders are inert — delete them and nothing breaks.
+In OpenResearch, every session also gets orx's own `orx-*` skills. Not using an
+agent? The folder is inert — delete it and nothing breaks.
 
 ## Customize it
 
@@ -142,7 +140,7 @@ After clicking **Use this template**, make it yours:
 1. Rename the package `src/ark/` → `src/<your_project>` and update `pyproject.toml`.
 2. Fill in author fields in `pyproject.toml`, `LICENSE`, and `CITATION.cff`.
 3. Add your dependencies with `uv add <package>` (updates `uv.lock`).
-4. Delete the example experiment and `paper/`/`.claude/` bits you don't need.
+4. Delete the example experiment and `paper/`/`.agents/` bits you don't need.
 
 ## Contributing
 

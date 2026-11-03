@@ -1,35 +1,10 @@
 {
   "version": 1,
   "skills": {
-    "Agent Development": {
-      "source": "anthropics/claude-code",
-      "sourceType": "github",
-      "computedHash": "4931c2867890bfef5881225adb691c3d719fe9ad556e3d5fae15f83e0668fa60"
-    },
-    "Plugin Structure": {
-      "source": "anthropics/claude-code",
-      "sourceType": "github",
-      "computedHash": "c4e9b3ea36efad4ab599465aaac71f81dc3320a183920678fe1587181c446b07"
-    },
-    "Skill Development": {
-      "source": "anthropics/claude-code",
-      "sourceType": "github",
-      "computedHash": "8d262f08f33825947ea20204ebf5101e36056c98090251bd973a552ec8ef0c0c"
-    },
-    "claude-api": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "computedHash": "32dd09838c3a5c504e702a1e2f6037b4791c87c9013a0b7768ea4eef0e02fb8b"
-    },
     "memory-management": {
       "source": "anthropics/knowledge-work-plugins",
       "sourceType": "github",
       "computedHash": "e2e5ec18d09d3e0d6e194cf4a598477fa32de302c921ffd8eff75d78770e3399"
-    },
-    "skill-creator": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "computedHash": "57f470f512f45bdac598e302bc72fd62bf2b649fc7fad032efe97720149cde4d"
     },
     "system-design": {
       "source": "anthropics/knowledge-work-plugins",

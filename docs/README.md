@@ -8,4 +8,4 @@ Suggested contents:
 - `data.md` — dataset descriptions, sources, and licenses
 - `experiments.md` — log of experiments and findings
 
-The bundled `system-design` skill (`.claude/skills/`) can help draft design docs.
+The bundled `system-design` skill (`.agents/skills/`) can help draft design docs.
